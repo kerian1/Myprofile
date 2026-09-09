@@ -141,17 +141,17 @@ body {
 .hamburger::after { top: 8px; }
 
 /* ==========================================================================
-   Hero Section
+   Hero Section & Content
    ========================================================================== */
 .hero-section {
-  padding: 160px 0 100px;
+  padding: 150px 0 90px;
   background: var(--navy-gradient);
   color: #ffffff;
   position: relative;
   overflow: hidden;
 }
 
-/* Subtle background accent glow */
+/* Background accent glow */
 .hero-section::before {
   content: '';
   position: absolute;
@@ -168,7 +168,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 50px;
+  gap: 40px;
   position: relative;
   z-index: 2;
 }
@@ -186,7 +186,7 @@ body {
 }
 
 .hero-content h2 {
-  font-size: 1.35rem;
+  font-size: 1.25rem;
   color: var(--accent-cyan-light);
   font-weight: 500;
   margin-bottom: 24px;
@@ -209,7 +209,7 @@ body {
   gap: 18px;
 }
 
-/* Modernized Buttons */
+/* Buttons */
 .btn {
   display: inline-block;
   padding: 14px 32px;
@@ -246,44 +246,46 @@ body {
   transform: translateY(-2px);
 }
 
-/* Hero Image Styling with Creative Card Framing */
+/* ==========================================================================
+   Hero Image Styling (Compact Circular Avatar)
+   ========================================================================== */
 .hero-image {
-  flex: 0.9;
-  position: relative;
+  flex: 0.8;
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
 
+/* Glowing Accent Ring behind Avatar */
 .hero-image::before {
   content: '';
   position: absolute;
-  width: 100%;
-  height: 100%;
-  max-width: 360px;
+  width: 210px;
+  height: 210px;
   background: var(--accent-gradient);
-  border-radius: 20px;
-  transform: rotate(-4deg);
-  opacity: 0.7;
-  filter: blur(15px);
+  border-radius: 50%;
+  opacity: 0.6;
+  filter: blur(12px);
   z-index: 1;
 }
 
+/* Main Profile Image - Compact & Circular */
 .hero-image img {
   position: relative;
   z-index: 2;
-  width: 100%;
-  max-width: 350px;
-  height: 420px;
-  border-radius: 16px;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
   object-fit: cover;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-  border: 2px solid rgba(255, 255, 255, 0.2);
+  border: 4px solid var(--accent-cyan);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
   transition: var(--transition);
 }
 
 .hero-image:hover img {
-  transform: scale(1.02);
+  transform: scale(1.05);
+  border-color: var(--accent-cyan-light);
 }
 
 /* ==========================================================================
@@ -442,7 +444,7 @@ body {
    ========================================================================== */
 @media (max-width: 992px) {
   .hero-container {
-    flex-direction: column;
+    flex-direction: column-reverse;
     text-align: center;
   }
 
@@ -458,8 +460,14 @@ body {
     justify-content: center;
   }
 
-  .hero-image {
-    margin-top: 20px;
+  .hero-image img {
+    width: 170px;
+    height: 170px;
+  }
+
+  .hero-image::before {
+    width: 180px;
+    height: 180px;
   }
 }
 
