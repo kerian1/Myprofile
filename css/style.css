@@ -2,10 +2,10 @@
    Global Variables & Brand Theme
    ========================================================================== */
 :root {
-  /* Manual Hero Image Adjustment Controls */
-  --avatar-size: 210px;               /* Width & Height of your profile picture */
-  --avatar-object-position: 50% 25%;  /* Crop focus point */
-  --avatar-border-width: 4px;         /* Border thickness */
+  /* Hero Image Adjustment Controls */
+  --avatar-size: 210px;               
+  --avatar-object-position: 50% 25%;  
+  --avatar-border-width: 4px;         
 
   /* Palette Colors */
   --primary-navy: #0b2b5b;       
@@ -249,6 +249,47 @@ body {
   background: #ffffff;
   color: var(--primary-navy);
   transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   Editable Text Styles (Admin Mode)
+   ========================================================================== */
+.admin-text-tools {
+  margin-top: 25px;
+  display: flex;
+  gap: 12px;
+}
+
+.btn-text-edit,
+.btn-text-save {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--accent-cyan-light);
+  border: 1px solid var(--accent-cyan);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-text-save {
+  background: var(--accent-cyan);
+  color: #ffffff;
+}
+
+.btn-text-edit:hover,
+.btn-text-save:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 168, 204, 0.3);
+}
+
+/* Visual cue when text elements become editable */
+[contenteditable="true"] {
+  outline: 2px dashed var(--accent-cyan);
+  outline-offset: 4px;
+  border-radius: 4px;
+  background: rgba(0, 168, 204, 0.08);
 }
 
 /* ==========================================================================
@@ -552,6 +593,10 @@ body {
   }
 
   .hero-buttons {
+    justify-content: center;
+  }
+
+  .admin-text-tools {
     justify-content: center;
   }
 }
