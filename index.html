@@ -35,15 +35,23 @@
   <section id="hero" class="hero-section">
     <div class="container hero-container">
       <div class="hero-content">
-        <h1>Bullem Kerian Ediga</h1>
-        <h2>Network & Infrastructure Analyst | Systems Administrator</h2>
-        <p>Designing, securing, and automating enterprise network architectures, hybrid servers, and smart infrastructure.</p>
+        <!-- Editable Text Elements -->
+        <h1 id="hero-name">Bullem Kerian Ediga</h1>
+        <h2 id="hero-title">Network & Infrastructure Analyst | Systems Administrator</h2>
+        <p id="hero-bio">Designing, securing, and automating enterprise network architectures, hybrid servers, and smart infrastructure.</p>
+
         <div class="hero-buttons">
           <a href="#services" class="btn btn-primary">Explore Services</a>
           <a href="#contact" class="btn btn-secondary">Get in Touch</a>
         </div>
+
+        <!-- Owner Text Controls (Visible only in Admin Mode) -->
+        <div id="admin-text-controls" class="admin-text-tools" style="display: none;">
+          <button id="edit-text-btn" class="btn-text-edit" onclick="toggleTextEditing()">✏️ Edit Bio Text</button>
+          <button id="save-text-btn" class="btn-text-save" onclick="saveTextContent()" style="display: none;">💾 Save Text Changes</button>
+        </div>
       </div>
-      
+
       <!-- Editable Hero Image Wrapper -->
       <div class="hero-image" id="hero-image-container">
         <img id="hero-avatar" src="images/profile.jpg" alt="Bullem Kerian Ediga">
