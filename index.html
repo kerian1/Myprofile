@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bullem Kerian Ediga | Systems, Networking & Automation Specialist</title>
+  
+  <!-- Cropper.js CSS for LinkedIn-style photo adjustments -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -41,9 +44,14 @@
         </div>
       </div>
       
-      <!-- Hero Image Wrapper -->
-      <div class="hero-image">
-        <img src="images/profile.jpg" alt="Bullem Kerian Ediga">
+      <!-- Editable Hero Image Wrapper -->
+      <div class="hero-image" id="hero-image-container">
+        <img id="hero-avatar" src="images/profile.jpg" alt="Bullem Kerian Ediga">
+        
+        <!-- Owner Edit Badge (Only visible in Admin Mode: ?admin=true) -->
+        <button id="admin-edit-btn" class="edit-badge-btn" onclick="openImageModal()">
+          ✏️ Edit Photo
+        </button>
       </div>
     </div>
   </section>
@@ -62,42 +70,36 @@
       <h2>Areas of Expertise</h2>
       <div class="services-grid">
 
-        <!-- Service 1 -->
         <div class="service-card">
           <h3>System Administration</h3>
           <p>Active Directory governance, Windows/Linux server management, IAM, and hybrid cloud business continuity.</p>
           <a href="services/system-administration.html" class="service-link">Learn More &rarr;</a>
         </div>
 
-        <!-- Service 2 -->
         <div class="service-card">
           <h3>Networking</h3>
           <p>Enterprise LAN/WAN design, Next-Gen firewalls, VLAN segmentation, and multi-WAN automated failover.</p>
           <a href="services/networking.html" class="service-link">Learn More &rarr;</a>
         </div>
 
-        <!-- Service 3 -->
         <div class="service-card">
           <h3>CCTV & Surveillance</h3>
           <p>Enterprise IP CCTV network deployments, remote VPN stream routing, and physical security architecture.</p>
           <a href="services/cctv.html" class="service-link">Learn More &rarr;</a>
         </div>
 
-        <!-- Service 4 -->
         <div class="service-card">
           <h3>Smart Home</h3>
           <p>IoT network segmentation, high-throughput wireless access arrays, and dual-ISP redundancy for automated spaces.</p>
           <a href="services/smart-home.html" class="service-link">Learn More &rarr;</a>
         </div>
 
-        <!-- Service 5 -->
         <div class="service-card">
           <h3>Website & Web Services</h3>
           <p>Frontend web deployment, custom DNS configurations, domain routing, and web server administration.</p>
           <a href="services/website.html" class="service-link">Learn More &rarr;</a>
         </div>
 
-        <!-- Service 6 -->
         <div class="service-card">
           <h3>AI & Workflow Automation</h3>
           <p>Custom n8n automation pipelines, system telemetry integration, and business process optimizations.</p>
@@ -130,6 +132,25 @@
     </div>
   </section>
 
+  <!-- Modal Dialog for Photo Cropping & Adjustments -->
+  <div id="cropper-modal" class="modal-overlay">
+    <div class="modal-content">
+      <h3>Adjust Profile Photo</h3>
+      
+      <div class="crop-container">
+        <img id="crop-preview" src="">
+      </div>
+      
+      <div class="modal-actions">
+        <label for="image-upload-input" class="btn btn-secondary" style="cursor: pointer;">Upload New Photo</label>
+        <input type="file" id="image-upload-input" accept="image/*" style="display: none;">
+        
+        <button class="btn btn-primary" onclick="saveCroppedImage()">Save Changes</button>
+        <button class="btn btn-cancel" onclick="closeImageModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Footer -->
   <footer class="footer">
     <div class="container">
@@ -137,6 +158,8 @@
     </div>
   </footer>
 
+  <!-- Cropper.js JavaScript Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>
