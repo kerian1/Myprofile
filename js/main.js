@@ -17,27 +17,40 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 2. Load Saved Profile Photo from Local Storage (Public & Owner View)
+  // 2. Load Saved Profile Photo from Local Storage
   const savedImage = localStorage.getItem('owner_hero_image');
   const heroAvatar = document.getElementById('hero-avatar');
   if (savedImage && heroAvatar) {
     heroAvatar.src = savedImage;
   }
 
-  // 3. Admin Authentication Check via URL Parameter (?admin=true)
+  // 3. Load Saved Hero Text Content
+  const savedName = localStorage.getItem('owner_hero_name');
+  const savedTitle = localStorage.getItem('owner_hero_title');
+  const savedBio = localStorage.getItem('owner_hero_bio');
+
+  if (savedName) document.getElementById('hero-name').innerText = savedName;
+  if (savedTitle) document.getElementById('hero-title').innerText = savedTitle;
+  if (savedBio) document.getElementById('hero-bio').innerText = savedBio;
+
+  // 4. Admin Authentication Check via URL Parameter (?admin=true)
   const urlParams = new URLSearchParams(window.location.search);
   const isAdminParam = urlParams.get('admin') === 'true';
   const isSessionAdmin = sessionStorage.getItem('isAdmin') === 'true';
 
   if (isAdminParam || isSessionAdmin) {
     sessionStorage.setItem('isAdmin', 'true');
-    const adminBtn = document.getElementById('admin-edit-btn');
-    if (adminBtn) {
-      adminBtn.style.display = 'block'; // Make Edit button visible only to Admin/Owner
-    }
+
+    // Show Image Edit Button
+    const adminImgBtn = document.getElementById('admin-edit-btn');
+    if (adminImgBtn) adminImgBtn.style.display = 'block';
+
+    // Show Text Edit Controls
+    const textTools = document.getElementById('admin-text-controls');
+    if (textTools) textTools.style.display = 'flex';
   }
 
-  // 4. File Input Event Listener for Modal Uploads
+  // 5. File Input Event Listener for Photo Uploads
   const imageInput = document.getElementById('image-upload-input');
   if (imageInput) {
     imageInput.addEventListener('change', handleImageUpload);
@@ -45,12 +58,9 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /* ==========================================================================
-   Image Editor & Modal Functions
+   Image Editor & Cropper Functions
    ========================================================================== */
 
-/**
- * Opens the Cropper modal and initializes the LinkedIn-style image adjuster
- */
 function openImageModal() {
   const modal = document.getElementById('cropper-modal');
   const cropPreview = document.getElementById('crop-preview');
@@ -61,12 +71,8 @@ function openImageModal() {
   cropPreview.src = currentAvatarSrc;
   modal.style.display = 'flex';
 
-  // Destroy previous cropper instance if running
-  if (cropper) {
-    cropper.destroy();
-  }
+  if (cropper) cropper.destroy();
 
-  // Initialize Cropper.js with 1:1 ratio for circular profile pictures
   cropper = new Cropper(cropPreview, {
     aspectRatio: 1,
     viewMode: 1,
@@ -82,9 +88,6 @@ function openImageModal() {
   });
 }
 
-/**
- * Handles uploading a new image from local device storage
- */
 function handleImageUpload(event) {
   const files = event.target.files;
   if (files && files.length > 0) {
@@ -98,13 +101,9 @@ function handleImageUpload(event) {
   }
 }
 
-/**
- * Exports cropped canvas, updates live view, and persists changes
- */
 function saveCroppedImage() {
   if (!cropper) return;
 
-  // Export cropped image as Base64 JPEG canvas
   const canvas = cropper.getCroppedCanvas({
     width: 400,
     height: 400,
@@ -114,30 +113,66 @@ function saveCroppedImage() {
 
   const base64Image = canvas.toDataURL('image/jpeg', 0.9);
 
-  // 1. Update live hero avatar image instantly
   const heroAvatar = document.getElementById('hero-avatar');
-  if (heroAvatar) {
-    heroAvatar.src = base64Image;
-  }
+  if (heroAvatar) heroAvatar.src = base64Image;
 
-  // 2. Persist image to browser memory for returning visitors
   localStorage.setItem('owner_hero_image', base64Image);
-
-  // 3. Close Modal Cleanly
   closeImageModal();
 }
 
-/**
- * Closes modal and destroys cropper instance
- */
 function closeImageModal() {
   const modal = document.getElementById('cropper-modal');
-  if (modal) {
-    modal.style.display = 'none';
-  }
+  if (modal) modal.style.display = 'none';
 
   if (cropper) {
     cropper.destroy();
     cropper = null;
   }
+}
+
+/* ==========================================================================
+   Inline Text Editing Functions
+   ========================================================================== */
+
+function toggleTextEditing() {
+  const nameEl = document.getElementById('hero-name');
+  const titleEl = document.getElementById('hero-title');
+  const bioEl = document.getElementById('hero-bio');
+
+  const editBtn = document.getElementById('edit-text-btn');
+  const saveBtn = document.getElementById('save-text-btn');
+
+  const isEditing = nameEl.isContentEditable;
+
+  if (!isEditing) {
+    nameEl.contentEditable = "true";
+    titleEl.contentEditable = "true";
+    bioEl.contentEditable = "true";
+
+    nameEl.focus();
+    editBtn.style.display = "none";
+    saveBtn.style.display = "inline-block";
+  }
+}
+
+function saveTextContent() {
+  const nameEl = document.getElementById('hero-name');
+  const titleEl = document.getElementById('hero-title');
+  const bioEl = document.getElementById('hero-bio');
+
+  const editBtn = document.getElementById('edit-text-btn');
+  const saveBtn = document.getElementById('save-text-btn');
+
+  nameEl.contentEditable = "false";
+  titleEl.contentEditable = "false";
+  bioEl.contentEditable = "false";
+
+  localStorage.setItem('owner_hero_name', nameEl.innerText.trim());
+  localStorage.setItem('owner_hero_title', titleEl.innerText.trim());
+  localStorage.setItem('owner_hero_bio', bioEl.innerText.trim());
+
+  editBtn.style.display = "inline-block";
+  saveBtn.style.display = "none";
+
+  alert('Hero content saved successfully!');
 }
